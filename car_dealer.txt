@@ -1,0 +1,291 @@
+MariaDB [car_dealer]> show tables;
++---------------------------+
+| Tables_in_car_dealer      |
++---------------------------+
+| books                     |
+| customer                  |
+| customer_order            |
+| customer_payment          |
+| customer_transaction      |
+| dealer_vendor_transaction |
+| dependants                |
+| emi                       |
+| employee                  |
+| give_salary               |
+| has_insurance             |
+| has_offer                 |
+| insurance_company         |
+| manager                   |
+| policy_manager            |
+| registered                |
+| salary_transaction        |
+| vehicle                   |
+| vehicle_insurance         |
+| vehicle_vendor            |
+| vendor_order              |
++---------------------------+
+21 rows in set (0.00 sec)
+
+MariaDB [car_dealer]> describe books;
++-------------------+---------+------+-----+---------+-------+
+| Field             | Type    | Null | Key | Default | Extra |
++-------------------+---------+------+-----+---------+-------+
+| vehicle_id        | int(11) | NO   | MUL | NULL    |       |
+| customer_order_id | int(11) | NO   | PRI | NULL    |       |
++-------------------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+
+MariaDB [car_dealer]> describe customer;
++----------------+-----------------------------------------------------+------+-----+---------+----------------+
+| Field          | Type                                                | Null | Key | Default | Extra          |
++----------------+-----------------------------------------------------+------+-----+---------+----------------+
+| id             | int(11)                                             | NO   | PRI | NULL    | auto_increment |
+| name           | varchar(255)                                        | NO   |     | NULL    |                |
+| contact_number | varchar(20)                                         | NO   |     | NULL    |                |
+| address        | varchar(255)                                        | NO   |     | NULL    |                |
+| email          | varchar(255)                                        | NO   |     | NULL    |                |
+| age            | int(11)                                             | NO   |     | NULL    |                |
+| dept           | enum('admin','broker','auxiliary','human_resource') | NO   |     | NULL    |                |
++----------------+-----------------------------------------------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe insurance_company;
++----------------+------------------+------+-----+---------+----------------+
+| Field          | Type             | Null | Key | Default | Extra          |
++----------------+------------------+------+-----+---------+----------------+
+| id             | int(11)          | NO   | PRI | NULL    | auto_increment |
+| name           | varchar(60)      | NO   |     | NULL    |                |
+| contact_number | int(10) unsigned | NO   |     | NULL    |                |
++----------------+------------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe policy_manager;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| id             | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name           | varchar(255) | NO   |     | NULL    |                |
+| contact_number | varchar(20)  | NO   |     | NULL    |                |
+| email          | varchar(255) | NO   |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe vehicle_vendor;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int(11)      | NO   | PRI | NULL    | auto_increment |
+| address      | varchar(500) | NO   |     | NULL    |                |
+| date_of_join | date         | NO   |     | NULL    |                |
+| name         | varchar(255) | NO   |     | NULL    |                |
+| email        | varchar(255) | NO   |     | NULL    |                |
+| comments     | varchar(511) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe customer_transaction;
++----------------+---------------+------+-----+---------+-------+
+| Field          | Type          | Null | Key | Default | Extra |
++----------------+---------------+------+-----+---------+-------+
+| transaction_id | varchar(50)   | NO   | PRI | NULL    |       |
+| bank           | varchar(100)  | NO   |     | NULL    |       |
+| date           | date          | NO   |     | NULL    |       |
+| account_number | varchar(50)   | NO   |     | NULL    |       |
+| amount         | decimal(12,2) | NO   |     | NULL    |       |
++----------------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe emi;
++--------------------+-------------+------+-----+---------+----------------+
+| Field              | Type        | Null | Key | Default | Extra          |
++--------------------+-------------+------+-----+---------+----------------+
+| id                 | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name               | varchar(50) | NO   |     | NULL    |                |
+| no_of_installments | int(11)     | NO   |     | NULL    |                |
+| installment_amount | int(11)     | NO   |     | NULL    |                |
++--------------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe manager;
++---------+-------------------------------+------+-----+---------+----------------+
+| Field   | Type                          | Null | Key | Default | Extra          |
++---------+-------------------------------+------+-----+---------+----------------+
+| id      | int(11)                       | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(255)                  | NO   |     | NULL    |                |
+| address | varchar(511)                  | NO   |     | NULL    |                |
+| salary  | int(11)                       | NO   |     | NULL    |                |
+| gender  | enum('male','female','other') | YES  |     | NULL    |                |
++---------+-------------------------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe salary_transaction;
++----------------+---------------+------+-----+---------+-------+
+| Field          | Type          | Null | Key | Default | Extra |
++----------------+---------------+------+-----+---------+-------+
+| transaction_id | varchar(50)   | NO   | PRI | NULL    |       |
+| bank           | varchar(100)  | NO   |     | NULL    |       |
+| date           | date          | NO   |     | NULL    |       |
+| account_number | varchar(50)   | NO   |     | NULL    |       |
+| amount         | decimal(12,2) | NO   |     | NULL    |       |
++----------------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe dealer_vendor_transaction;
++----------------+---------------+------+-----+---------+-------+
+| Field          | Type          | Null | Key | Default | Extra |
++----------------+---------------+------+-----+---------+-------+
+| transaction_id | varchar(50)   | NO   | PRI | NULL    |       |
+| bank           | varchar(100)  | NO   |     | NULL    |       |
+| date           | date          | NO   |     | NULL    |       |
+| account_number | varchar(50)   | NO   |     | NULL    |       |
+| amount         | decimal(12,2) | NO   |     | NULL    |       |
++----------------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe vehicle;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name         | varchar(255) | NO   |     | NULL    |                |
+| price        | int(11)      | NO   |     | NULL    |                |
+| color        | varchar(100) | NO   |     | NULL    |                |
+| mileage      | decimal(5,2) | NO   |     | NULL    |                |
+| cylinder_vol | decimal(5,2) | NO   |     | NULL    |                |
+| transmission | int(11)      | NO   |     | 5       |                |
+| max_speed    | int(11)      | NO   |     | NULL    |                |
+| particulars  | varchar(511) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe customer_order;
++-------------+------------------------------------------+------+-----+---------+----------------+
+| Field       | Type                                     | Null | Key | Default | Extra          |
++-------------+------------------------------------------+------+-----+---------+----------------+
+| id          | int(11)                                  | NO   | PRI | NULL    | auto_increment |
+| ETA         | date                                     | NO   |     | NULL    |                |
+| status      | enum('PENDING','DELIVERED','IN_TRANSIT') | NO   |     | NULL    |                |
+| date        | date                                     | NO   |     | NULL    |                |
+| customer_id | int(11)                                  | NO   | MUL | NULL    |                |
++-------------+------------------------------------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe customer_payment;
++----------------+--------------------------------+------+-----+---------+-------+
+| Field          | Type                           | Null | Key | Default | Extra |
++----------------+--------------------------------+------+-----+---------+-------+
+| transaction_id | varchar(50)                    | NO   | PRI | NULL    |       |
+| customer_id    | int(11)                        | NO   | PRI | NULL    |       |
+| type           | enum('advance','emi','normal') | NO   |     | normal  |       |
++----------------+--------------------------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe employee;
++---------------------+-------------------------------+------+-----+---------+----------------+
+| Field               | Type                          | Null | Key | Default | Extra          |
++---------------------+-------------------------------+------+-----+---------+----------------+
+| id                  | int(11)                       | NO   | PRI | NULL    | auto_increment |
+| name                | varchar(255)                  | NO   |     | NULL    |                |
+| address             | varchar(511)                  | NO   |     | NULL    |                |
+| salary              | int(11)                       | NO   |     | NULL    |                |
+| gender              | enum('male','female','other') | YES  |     | NULL    |                |
+| age                 | int(11)                       | NO   |     | NULL    |                |
+| managed_by          | int(11)                       | YES  | MUL | NULL    |                |
+| policy_manager      | int(11)                       | NO   | MUL | NULL    |                |
+| policy_join_date    | date                          | NO   |     | NULL    |                |
+| policy_renewal_date | date                          | NO   |     | NULL    |                |
++---------------------+-------------------------------+------+-----+---------+----------------+
+10 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe dependants;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| name        | varchar(60) | NO   | PRI | NULL    |       |
+| age         | int(11)     | NO   |     | NULL    |       |
+| employee_id | int(11)     | NO   | PRI | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe give_salary;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| employee_id    | int(11)     | NO   | PRI | NULL    |       |
+| transaction_id | varchar(50) | NO   | PRI | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe vehicle_insurance;
++----------------------+--------------------------------------------------------------------------------------------+------+-----+-----------+----------------+
+| Field                | Type                                                                                       | Null | Key | Default   | Extra          |
++----------------------+--------------------------------------------------------------------------------------------+------+-----+-----------+----------------+
+| id                   | int(11)                                                                                    | NO   | PRI | NULL      | auto_increment |
+| policy_name          | varchar(60)                                                                                | NO   |     | NULL      |                |
+| coverage             | enum('liability','collission','comprehensive','personal_injury','underinsured_protection') | NO   |     | liability |                |
+| insurance_company_id | int(11)                                                                                    | NO   | MUL | NULL      |                |
++----------------------+--------------------------------------------------------------------------------------------+------+-----+-----------+----------------+
+4 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe has_insurance;
++----------------------+---------+------+-----+---------+-------+
+| Field                | Type    | Null | Key | Default | Extra |
++----------------------+---------+------+-----+---------+-------+
+| customer_order_id    | int(11) | NO   | PRI | NULL    |       |
+| vehicle_insurance_id | int(11) | NO   | PRI | NULL    |       |
+| renewal_date         | date    | NO   |     | NULL    |       |
++----------------------+---------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe has_offer;
++------------+---------+------+-----+---------+-------+
+| Field      | Type    | Null | Key | Default | Extra |
++------------+---------+------+-----+---------+-------+
+| emi_id     | int(11) | NO   | PRI | NULL    |       |
+| vehicle_id | int(11) | NO   | PRI | NULL    |       |
++------------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe registered;
++-------------------+---------+------+-----+---------+-------+
+| Field             | Type    | Null | Key | Default | Extra |
++-------------------+---------+------+-----+---------+-------+
+| customer_order_id | int(11) | NO   | PRI | NULL    |       |
+| emi_id            | int(11) | NO   | MUL | NULL    |       |
++-------------------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+MariaDB [car_dealer]> describe vendor_order;
++----------------+------------------------------------------+------+-----+---------+----------------+
+| Field          | Type                                     | Null | Key | Default | Extra          |
++----------------+------------------------------------------+------+-----+---------+----------------+
+| id             | int(11)                                  | NO   | PRI | NULL    | auto_increment |
+| vendor_id      | int(11)                                  | NO   | MUL | NULL    |                |
+| vehicle_id     | int(11)                                  | NO   | MUL | NULL    |                |
+| transaction_id | varchar(50)                              | NO   | MUL | NULL    |                |
+| status         | enum('PENDING','DELIVERED','IN_TRANSIT') | NO   |     | PENDING |                |
+| quantity       | int(11)                                  | NO   |     | NULL    |                |
++----------------+------------------------------------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
