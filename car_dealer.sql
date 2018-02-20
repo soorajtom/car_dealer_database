@@ -22,7 +22,8 @@ CREATE TABLE `customer` (
   `email` varchar(255) NOT NULL,
   `age` int(11) NOT NULL,
   `dept` enum('admin','broker','auxiliary','human_resource') NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE(`email`)
 );
 
 
