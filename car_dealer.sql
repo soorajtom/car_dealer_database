@@ -1,3 +1,6 @@
+-- drop database if it exists
+DROP DATABASE IF EXISTS car_dealer;
+
 --
 -- Current Database: `Car_dealer`
 --
@@ -291,14 +294,3 @@ CREATE TABLE `vendor_order` (
 ) ;
 
 
-
-CREATE TRIGGER `email_validate_customer`
-	BEFORE INSERT
-	ON `customer`
-	FOR EACH ROW
-BEGIN
-	IF NEW.`email` NOT LIKE '%_@%_.__%' THEN
-		SIGNAL SQLSTATE VALUE '45000'
-			SET MESSAGE_TEXT = '[table:person] - `email` column is not valid';
-	END IF;
-END;
