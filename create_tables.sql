@@ -21,7 +21,6 @@ CREATE TABLE `customer` (
   `address` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `age` int(11) NOT NULL,
-  `dept` enum('admin','broker','auxiliary','human_resource') NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE(`email`)
 );
@@ -47,6 +46,7 @@ CREATE TABLE `policy_manager` (
   `name` varchar(255) NOT NULL,
   `contact_number` varchar(20) NOT NULL,
   `email` varchar(255) NOT NULL,
+  UNIQUE(`email`),
   PRIMARY KEY (`id`)
 ) ;
 
@@ -61,6 +61,7 @@ CREATE TABLE `vehicle_vendor` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `comments` varchar(511) DEFAULT NULL,
+  UNIQUE(`email`),
   PRIMARY KEY (`id`)
 ) ;
 
@@ -191,9 +192,10 @@ CREATE TABLE `employee` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `address` varchar(511) NOT NULL,
-  `salary` int(11) NOT NULL,
+  `salary` decimal(12,2) NOT NULL,
   `gender` enum('male','female','other') DEFAULT NULL,
   `age` int(11) NOT NULL,
+  `dept` enum('admin','broker','auxiliary','human_resource') NOT NULL,
   `managed_by` int(11) DEFAULT NULL,
   `policy_manager` int(11) NOT NULL,
   `policy_join_date` date NOT NULL,
