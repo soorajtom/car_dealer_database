@@ -65,3 +65,4 @@ BEGIN
 END;//
 
 DELIMITER ;
+show triggers \G;
