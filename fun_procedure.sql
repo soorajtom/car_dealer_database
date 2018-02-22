@@ -33,4 +33,81 @@ BEGIN
 	END IF;
 
 END//
+
+--
+-- PROCEDURE TO INSERT CUSTOMER PAYMENT
+--
+CREATE OR REPLACE PROCEDURE insert_customer_payment(
+       	  	  IN order_id INT,
+       	  	  IN transaction_id VARCHAR(50),
+		  IN type enum('advance','emi','normal'),
+		  IN emi_id INT,
+		  IN bank VARCHAR(100),
+		  IN account_number VARCHAR(50),
+		  IN payment_date DATE,
+		  IN amount DECIMAL(12,2))
+BEGIN
+DECLARE customer_id INT ;
+DECLARE _date DATE ;
+SET customer_id = (SELECT C.customer_id
+    		  FROM customer_order AS C
+		  WHERE C.id=order_id);
+SET _date = IF(ISNULL(payment_date), CURDATE(), payment_date);
+INSERT INTO customer_transaction
+       (transaction_id,
+       bank,
+       date,
+       account_number,
+       amount) VALUES (transaction_id,
+       	       	      bank,
+		      _date,
+       		      account_number,
+       		      amount);
+INSERT INTO customer_payment(transaction_id, customer_id, type)
+       VALUES (transaction_id, customer_id, type);
+       IF type='emi' THEN
+       	  INSERT INTO registered(customer_order_id,
+				emi_id) VALUES
+				(order_id, emi_id);
+       END IF;
+END //
+
+--
+-- PROCEDURE FOR INSERTING SALARY PAYMENT
+--
+
+CREATE OR REPLACE PROCEDURE insert_salary_payment(
+       	  	  IN employee_id INT,
+       	  	  IN transaction_id VARCHAR(50),
+		  IN bank VARCHAR(100),
+		  IN account_number VARCHAR(50),
+		  IN payment_date DATE,
+		  IN amount DECIMAL(12,2))
+BEGIN
+DECLARE salary DECIMAL(12,2) ;
+DECLARE _date DATE ;
+SET salary = (SELECT E.salary
+    	     FROM Employee AS E
+	     WHERE E.id=employee_id);
+SET _date = IF(ISNULL(payment_date), CURDATE(), payment_date);
+    IF NOT salary=amount THEN
+       SIGNAL SQLSTATE VALUE '45000'
+       SET MESSAGE_TEXT = 'THE SALARY OF EMPLOYEE AND PAYMENT ARE NOT MATCHING';
+    END IF;
+INSERT INTO salary_transaction
+       (transaction_id,
+       bank,
+       date,
+       account_number,
+       amount) VALUES (transaction_id,
+       	       	      bank,
+		      _date,
+       		      account_number,
+       		      amount);
+INSERT INTO give_salary(employee_id, transaction_id)
+       VALUES (employee_id, transaction_id);
+END //
+
 DELIMITER ;
+show procedure status \G;
+show function status \G
