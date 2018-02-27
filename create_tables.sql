@@ -177,11 +177,11 @@ CREATE TABLE `books` (
 
 CREATE TABLE `customer_payment` (
   `transaction_id` varchar(50) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
   `type` enum('advance','emi','normal') NOT NULL DEFAULT 'normal',
   PRIMARY KEY (`transaction_id`,`customer_id`),
   FOREIGN KEY (`transaction_id`) REFERENCES `customer_transaction` (`transaction_id`) ON DELETE NO ACTION,
-  FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE NO ACTION
+  FOREIGN KEY (`order_id`) REFERENCES `customer_order` (`id`) ON DELETE NO ACTION
 ) ;
 
 --
