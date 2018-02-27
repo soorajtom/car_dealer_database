@@ -116,9 +116,6 @@ BEGIN
 	WHERE E.id=empid AND GS.employee_id=empid AND ST.transaction_id=GS.transaction_id;
 END//
 
-
-
-
 DELIMITER ;
 -- show procedure status \G;
 -- show function status \G

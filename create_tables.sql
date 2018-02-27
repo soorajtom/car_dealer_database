@@ -303,7 +303,7 @@ CREATE TABLE `vendor_order` (
 ) ;
 
 --
--- 
+-- Table showing Relationship between Vendor order and customer order
 --
 CREATE TABLE `vendor_order_customer_order` (
   `vendor_order_id` int(11) NOT NULL,
