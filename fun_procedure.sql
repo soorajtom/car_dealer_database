@@ -1,6 +1,5 @@
 DELIMITER //
 
---1
 CREATE OR REPLACE FUNCTION check_phone_num (phone_no VARCHAR(20), t_name VARCHAR(20)) RETURNS  VARCHAR(20)
 BEGIN
 	DECLARE msg VARCHAR (120);
@@ -22,7 +21,6 @@ BEGIN
 
 END//
 
---2
 CREATE OR REPLACE PROCEDURE check_email(IN email VARCHAR(255),
        	  	  	    		IN t_name VARCHAR(20))
 BEGIN
@@ -35,7 +33,7 @@ BEGIN
 
 END//
 
---3
+-- 
 -- PROCEDURE TO INSERT CUSTOMER PAYMENT
 --
 CREATE OR REPLACE PROCEDURE insert_customer_payment(
@@ -73,7 +71,7 @@ INSERT INTO customer_payment(transaction_id, customer_id, type)
        END IF;
 END //
 
---4
+-- 
 -- PROCEDURE FOR INSERTING SALARY PAYMENT
 --
 
@@ -122,5 +120,5 @@ END//
 
 
 DELIMITER ;
-show procedure status \G;
-show function status \G
+-- show procedure status \G;
+-- show function status \G

@@ -136,7 +136,6 @@ CREATE TABLE `vehicle` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `price` int(11) NOT NULL,
-  `color` varchar(100) NOT NULL,
   `mileage` decimal(5,2) NOT NULL,
   `cylinder_vol` decimal(5,2) NOT NULL,
   `transmission` int(11) NOT NULL DEFAULT '5',
@@ -144,6 +143,13 @@ CREATE TABLE `vehicle` (
   `particulars` varchar(511) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ;
+
+CREATE TABLE `vehicle_color` (
+  `id` int(11) NOT NULL,
+  `color` varchar(100) NOT NULL,
+  FOREIGN KEY (`id`) REFERENCES `vehicle`(`id`)
+);
+
 
 --
 -- Table structure for table `customer_order`
