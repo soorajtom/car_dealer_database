@@ -16,7 +16,7 @@ CREATE OR REPLACE VIEW customer_payment_view AS
 	    emi AS E,
 	    registered AS R,
 	    customer_order AS CO
-       WHERE C.id = P.customer_id
+       WHERE CO.id = P.order_id
 	    and P.transaction_id=T.transaction_id
 	    and IF (P.type='emi', R.emi_id = E.id
 	    and CO.id = R.customer_order_id
