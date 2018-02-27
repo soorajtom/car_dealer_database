@@ -85,7 +85,7 @@ CREATE TABLE `emi` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `no_of_installments` int(11) NOT NULL,
-  `installment_amount` int(11) NOT NULL,
+  `installment_amount` decimal(12,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ;
 
@@ -97,7 +97,7 @@ CREATE TABLE `manager` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `address` varchar(511) NOT NULL,
-  `salary` int(11) NOT NULL,
+  `salary` decimal(12,2) NOT NULL,
   `gender` enum('male','female','other') DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ;
@@ -135,9 +135,9 @@ CREATE TABLE `dealer_vendor_transaction` (
 CREATE TABLE `vehicle` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `price` int(11) NOT NULL,
+  `price` decimal(12,2) NOT NULL,
   `mileage` decimal(5,2) NOT NULL,
-  `cylinder_vol` INT NOT NULL,
+  `cylinder_vol` INT(11) NOT NULL,
   `transmission` int(11) NOT NULL DEFAULT '5',
   `max_speed` int(11) NOT NULL,
   `particulars` varchar(511) DEFAULT NULL,

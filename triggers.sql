@@ -104,6 +104,7 @@ BEGIN
 	END IF;
 END;//
 
+
 DELIMITER ;
 -- show triggers \G;
 
