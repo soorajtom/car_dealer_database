@@ -137,7 +137,7 @@ CREATE TABLE `vehicle` (
   `name` varchar(255) NOT NULL,
   `price` int(11) NOT NULL,
   `mileage` decimal(5,2) NOT NULL,
-  `cylinder_vol` decimal(5,2) NOT NULL,
+  `cylinder_vol` INT NOT NULL,
   `transmission` int(11) NOT NULL DEFAULT '5',
   `max_speed` int(11) NOT NULL,
   `particulars` varchar(511) DEFAULT NULL,
