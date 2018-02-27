@@ -145,6 +145,13 @@ CREATE TABLE `vehicle` (
   PRIMARY KEY (`id`)
 ) ;
 
+CREATE TABLE `vehicle_color` (
+  `id` int(11) NOT NULL,
+  `color` varchar(100) NOT NULL,
+  FOREIGN KEY (`id`) REFERENCES `vehicle`(`id`)
+);
+
+
 --
 -- Table structure for table `customer_order`
 --
