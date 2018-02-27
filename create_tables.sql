@@ -296,4 +296,13 @@ CREATE TABLE `vendor_order` (
   FOREIGN KEY (`vendor_id`) REFERENCES `vehicle_vendor` (`id`)
 ) ;
 
-
+--
+-- 
+--
+CREATE TABLE `vendor_order_customer_order` (
+  `vendor_order_id` int(11) NOT NULL,
+  `customer_order_id` int(11) NOT NULL,
+  PRIMARY KEY (`vendor_order_id`, `customer_order_id`),
+  FOREIGN KEY (`vendor_order_id`) REFERENCES `vendor_order` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`customer_order_id`) REFERENCES `customer_order` (`id`) ON DELETE CASCADE
+);
