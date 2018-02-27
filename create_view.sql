@@ -71,3 +71,10 @@ CREATE OR REPLACE VIEW vehicle_emi_view AS
 	    ON V.id=O.vehicle_id
 	    INNER JOIN (emi AS E) ON E.id=O.emi_id ;
 
+
+--
+-- VIEW FOR GETTING DETAILS OF ORDERS NOT YET DELIVERED
+--
+CREATE OR REPLACE VIEW vehicles_not_delivered AS
+	SELECT C.*, CO.ETA FROM `customer_order` AS CO, `customer` AS C
+	WHERE CO.status <> 'DELIVERED' AND CO.customer_id=C.id;
