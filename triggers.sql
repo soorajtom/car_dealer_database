@@ -92,8 +92,8 @@ END;//
 --- TRIGGER FOR VALIDATING CUSTOMER 
 ---
 
-DROP TRIGGER IF EXISTS `validate age` //
-CREATE TRIGGER `validate age`
+DROP TRIGGER IF EXISTS `validate_age` //
+CREATE TRIGGER `validate_age`
 	BEFORE INSERT
 	ON `customer`
 	FOR EACH ROW
@@ -101,6 +101,25 @@ BEGIN
 	IF new.age >= 18 THEN
 	   SIGNAL SQLSTATE VALUE '45000'
 	   SET MESSAGE_TEXT = '[table : customer] - customer should be atleast 18 years old';
+	END IF;
+END;//
+
+
+---
+--- TRIGGER FOR VALIDATING EMI REGISTRATION 
+---
+
+DROP TRIGGER IF EXISTS `emi_register_check` //
+CREATE TRIGGER `emi_register_check`
+	BEFORE INSERT
+	ON `registered`
+	FOR EACH ROW
+BEGIN
+DECLARE v_id INT;
+SET v_id = (SELECT vehicle_id FROM books WHERE cusomer_order_id = new.customer_order_id);
+	IF new.emi_id IN (SELECT emi_id FROM has_offer WHERE vehicle_id = v_id) THEN
+	   SIGNAL SQLSTATE VALUE '45000'
+	   SET MESSAGE_TEXT = '[table : registered] - emi_id entered is invalid for given vehicle';
 	END IF;
 END;//
 
