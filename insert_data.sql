@@ -209,4 +209,38 @@ INSERT INTO `vehicle_vendor`
 ('8', 'Yorba Linda South Carolina 28423', '2017-01-06', 'Toyota', 'support@toyota.com', NULL);
 
 --
--- INSRTING VENDOR
+-- INSRTING VENDOR ORDER 
+--
+INSERT INTO `vendor_order` 
+(`id`, `vendor_id`, `vehicle_id`, `status`, `quantity`) VALUES 
+('1', '3', '4', 'DELIVERED', '1'),
+('2', '6', '7', 'DELIVERED', '1'),
+('3', '8', '1', 'PENDING', '1'),
+('4', '2', '3', 'PENDING', '1'),
+('5', '4', '5', 'PENDING', '1'),
+('6', '1', '2', 'PENDING', '1');
+
+--
+-- INSERTING THE LINK BETWEEN CUSTOMER AND VENDOR ORDER
+--
+
+INSERT INTO `vendor_order_customer_order` 
+(`vendor_order_id`, `customer_order_id`) VALUES 
+('1', '5'),
+('2', '6'),
+('3', '1'),
+('4', '2'),
+('5', '3'),
+('6', '4');
+
+--
+-- INSERTING DATA FOR DEALER VENDOR TRANSACTIONS
+--
+INSERT INTO `dealer_vendor_transaction` 
+(`transaction_id`, `vendor_order_id`, `bank`, `date`, `account_number`, `amount`) VALUES 
+('ABCDE56985634', '1', '0036', '2017-02-15', '546521684326', '600000'),
+('ABCDE59558564', '2', '0034', '2017-06-28', '546521684326', '4600000'),
+('ABCDE51540634', '2', '0085', '2017-11-15', '546521684326', '2600000'),
+('ABCDE56024034', '3', '0075', '2018-03-01', '546521684326', '420000'),
+('ABCDE59603234', '4', '0034', '2018-01-18', '546521684326', '600000'),
+('ABCDE59500634', '5', '0097', '2018-01-15', '546521684326', '600000');
