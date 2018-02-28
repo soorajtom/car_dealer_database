@@ -158,7 +158,7 @@ CREATE TABLE `vehicle_color` (
 CREATE TABLE `customer_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ETA` date NOT NULL,
-  `status` enum('PENDING','DELIVERED','IN_TRANSIT') NOT NULL,
+  `status` enum('PENDING','IN_TRANSIT', 'READY','DELIVERED') NOT NULL,
   `date` date NOT NULL,
   `customer_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),

@@ -82,12 +82,12 @@ BEGIN
 DECLARE salary DECIMAL(12,2) ;
 DECLARE _date DATE ;
 SET salary = (SELECT E.salary
-    	     FROM Employee AS E
+    	     FROM employee AS E
 	     WHERE E.id=employee_id);
 SET _date = IF(ISNULL(payment_date), CURDATE(), payment_date);
-    IF NOT salary=amount THEN
+    IF salary>amount THEN
        SIGNAL SQLSTATE VALUE '45000'
-       SET MESSAGE_TEXT = 'THE SALARY OF EMPLOYEE AND PAYMENT ARE NOT MATCHING';
+       SET MESSAGE_TEXT = 'THE EMPLOYEE IS PAID SALARY LESS THAN THE BASE SALARY';
     END IF;
 INSERT INTO salary_transaction
        (transaction_id,
