@@ -34,23 +34,19 @@ BEGIN
 END//
 
 -- 
--- PROCEDURE TO INSERT CUSTOMER PAYMENT
+-- PROCEDURE TO INSERT CUSTOMER PAYMENT emi_id is NULL if type is not emi
 --
 CREATE OR REPLACE PROCEDURE insert_customer_payment(
        	  	  IN order_id INT,
        	  	  IN transaction_id VARCHAR(50),
 		  IN type enum('advance','emi','normal'),
-		  IN emi_id INT,
+		  IN emi_id INT, 
 		  IN bank VARCHAR(100),
 		  IN account_number VARCHAR(50),
 		  IN payment_date DATE,
 		  IN amount DECIMAL(12,2))
 BEGIN
-DECLARE customer_id INT ;
 DECLARE _date DATE ;
-SET customer_id = (SELECT C.customer_id
-    		  FROM customer_order AS C
-		  WHERE C.id=order_id);
 SET _date = IF(ISNULL(payment_date), CURDATE(), payment_date);
 INSERT INTO customer_transaction
        (transaction_id,
@@ -62,8 +58,8 @@ INSERT INTO customer_transaction
 		      _date,
        		      account_number,
        		      amount);
-INSERT INTO customer_payment(transaction_id, customer_id, type)
-       VALUES (transaction_id, customer_id, type);
+INSERT INTO customer_payment(transaction_id, order_id, type)
+       VALUES (transaction_id, order_id, type);
        IF type='emi' THEN
        	  INSERT INTO registered(customer_order_id,
 				emi_id) VALUES
@@ -115,6 +111,38 @@ BEGIN
 	SELECT E.name, ST.date, ST.amount FROM `employee` AS E, `give_salary` AS GS, `salary_transaction` AS ST 
 	WHERE E.id=empid AND GS.employee_id=empid AND ST.transaction_id=GS.transaction_id;
 END//
+
+--
+-- PROCEDURE TO FIND CUSTOMER WHO OPTED FOR emi AND NOT PAYED ANY PAYMENTS IN LAST MONTH
+--
+
+CREATE OR REPLACE PROCEDURE pending_emi_payments()
+BEGIN
+DECLARE cur_date DATE;
+DECLARE past_month DATE;
+SET cur_date = CURDATE();
+SET past_month = DATE_SUB( cur_date, INTERVAL 1 MONTH);
+    SELECT C.name AS name,
+    	   CO.id as order_id
+	   FROM customer AS C  ,
+	   customer_order AS CO,
+	   customer_payment AS CP,
+	   customer_transaction AS CT,
+	   emi as E,
+	   registered AS R
+	   WHERE C.id = CO.customer_id
+	   and CP.order_id = CO.id
+	   and CP.type = 'emi'
+	   and CT.transaction_id = CP.transaction_id
+	   and CT.date NOT BETWEEN cur_date and past_month
+	   and E.emi = R.emi_id
+	   and E.customer_order_id = CO.id
+	   and NOT ((E.no_of_installments*E.installment_amount) = (SELECT
+	       		SUM(T.amount)
+			FROM customer_transaction AS T
+			WHERE transaction_id = CT.transaction_id));
+END //
+
 
 DELIMITER ;
 -- show procedure status \G;
