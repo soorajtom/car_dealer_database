@@ -172,6 +172,7 @@ CREATE TABLE `customer_order` (
 CREATE TABLE `books` (
   `vehicle_id` int(11) NOT NULL,
   `customer_order_id` int(11) NOT NULL,
+  `color` varchar(100) NOT NULL, 
   PRIMARY KEY (`customer_order_id`),
   FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   FOREIGN KEY (`customer_order_id`) REFERENCES `customer_order` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE

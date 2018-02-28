@@ -1,6 +1,7 @@
 DELIMITER //
 
-CREATE OR REPLACE FUNCTION check_phone_num (phone_no VARCHAR(20), t_name VARCHAR(20)) RETURNS  VARCHAR(20)
+DROP FUNCTION IF EXISTS check_phone_num;
+CREATE FUNCTION check_phone_num (phone_no VARCHAR(20), t_name VARCHAR(20)) RETURNS  VARCHAR(20)
 BEGIN
 	DECLARE msg VARCHAR (120);
 	SET msg = CONCAT('[table:', t_name, '] - `contact_number` column is not valid phone number');
@@ -20,7 +21,8 @@ BEGIN
 	RETURN phone_no;
 END//
 
-CREATE OR REPLACE PROCEDURE check_email(IN email VARCHAR(255),
+DROP PROCEDURE IF EXISTS check_email;
+CREATE PROCEDURE check_email(IN email VARCHAR(255),
        	  	  	    		IN t_name VARCHAR(20))
 BEGIN
 	DECLARE msg VARCHAR(120);
@@ -35,7 +37,8 @@ END//
 -- 
 -- PROCEDURE TO INSERT CUSTOMER PAYMENT emi_id is NULL if type is not emi
 --
-CREATE OR REPLACE PROCEDURE insert_customer_payment(
+DROP PROCEDURE IF EXISTS insert_customer_payment;
+CREATE PROCEDURE insert_customer_payment(
        	  	  IN order_id INT,
        	  	  IN transaction_id VARCHAR(50),
 		  IN type enum('advance','emi','normal'),
@@ -69,8 +72,8 @@ END //
 -- 
 -- PROCEDURE FOR INSERTING SALARY PAYMENT
 --
-
-CREATE OR REPLACE PROCEDURE insert_salary_payment(
+DROP PROCEDURE IF EXISTS insert_salary_payment;
+CREATE PROCEDURE insert_salary_payment(
        	  	  IN employee_id INT,
        	  	  IN transaction_id VARCHAR(50),
 		  IN bank VARCHAR(100),
@@ -106,7 +109,8 @@ END //
 --
 -- PROCEDURE FOR GETTING SUMMARY OF SALARY PAID TO AN EMPLOYER
 --
-CREATE OR REPLACE PROCEDURE salary_summary(IN empid INTEGER)
+DROP PROCEDURE IF EXISTS salary_summary;
+CREATE PROCEDURE salary_summary(IN empid INTEGER)
 BEGIN
 	SELECT E.name, ST.date, ST.amount FROM `employee` AS E, `give_salary` AS GS, `salary_transaction` AS ST 
 	WHERE E.id=empid AND GS.employee_id=empid AND ST.transaction_id=GS.transaction_id;
@@ -115,8 +119,8 @@ END//
 --
 -- PROCEDURE TO FIND CUSTOMER WHO OPTED FOR emi AND NOT PAYED ANY PAYMENTS IN LAST MONTH
 --
-
-CREATE OR REPLACE PROCEDURE pending_emi_payments()
+DROP PROCEDURE IF EXISTS pending_emi_payments;
+CREATE PROCEDURE pending_emi_payments()
 BEGIN
 DECLARE cur_date DATE;
 DECLARE past_month DATE;
@@ -146,8 +150,9 @@ END //
 --
 -- FUNCTION TO INCREMENT BY PERCENT
 --
+DROP FUNCTION IF EXISTS inc_by_percent;
 
-CREATE OR REPLACE FUNCTION inc_by_percent(salary DECIMAL(12,2), percent DECIMAL(5,2)) RETURNS DECIMAL(12,2)
+CREATE FUNCTION inc_by_percent(salary DECIMAL(12,2), percent DECIMAL(5,2)) RETURNS DECIMAL(12,2)
 
 BEGIN
 	SET salary = salary + salary*percent;
@@ -156,8 +161,9 @@ END //
 --
 -- PROCEDURE FOR INCREMENTING SALARY FOR PARTICULAR EMPLOYEE
 --
+DROP PROCEDURE IF EXISTS salary_increment;
 
-CREATE OR REPLACE PROCEDURE salary_increment(IN empid INTEGER,
+CREATE PROCEDURE salary_increment(IN empid INTEGER,
        	  	  	    		     IN percent DECIMAL(12,2))
 BEGIN
 	UPDATE employee SET salary = inc_by_percent(salary,percent) WHERE id=empid; 
@@ -166,9 +172,9 @@ END //
 --
 -- PROCEDURE FOR INCREMENTING SALARY FOR ALL EMPLOYEES
 --
+DROP PROCEDURE IF EXISTS salary_increment_all;
 
-CREATE OR REPLACE PROCEDURE salary_increment(IN empid INTEGER,
-       	  	  	    		     IN percent DECIMAL(12,2))
+CREATE PROCEDURE salary_increment_all(IN percent DECIMAL(12,2))
 BEGIN
 	UPDATE employee SET salary = inc_by_percent(salary,percent);
 END //
@@ -176,7 +182,9 @@ END //
 --
 -- PROCEDURE FOR DECREMENTING SALARY FOR PARTICULAR EMPLOYEE
 --
-CREATE OR REPLACE PROCEDURE salary_decrement(IN empid INTEGER,
+DROP PROCEDURE IF EXISTS salary_decrement;
+
+CREATE PROCEDURE salary_decrement(IN empid INTEGER,
        	  	  	    		     IN percent DECIMAL(12,2))
 BEGIN
 	UPDATE employee SET salary = inc_by_percent(salary,(-percent)) WHERE id=empid; 
