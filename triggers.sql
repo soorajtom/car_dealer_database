@@ -141,6 +141,7 @@ SET v_id = (SELECT vehicle_id FROM books WHERE customer_order_id = new.order_id)
 	END IF;
     END IF;
 END;//
+
 --
 -- CHANGE STATUS IN customer order on reciving Vendor order status change
 --
@@ -155,6 +156,57 @@ SET order_id = (SELECT customer_order_id FROM vendor_order_customer_order WHERE 
     IF new.status = 'DELIVERED' THEN
 	UPDATE customer_order SET status='READY' WHERE id=order_id;
     END IF;
+END;//
+
+--
+-- CHANGE STATUS IN customer order on inserting Vendor order 
+--
+DROP TRIGGER IF EXISTS `change_order_status` //
+CREATE TRIGGER `change_order_status`
+	AFTER INSERT
+	ON `vendor_order_customer_order`
+	FOR EACH ROW
+BEGIN
+	UPDATE customer_order SET status='IN_TRANSIT' WHERE id=new.customer_order_id;
+END;//
+
+--
+-- CHANGE STATUS in customer order on inserting Vendor order  
+--
+DROP TRIGGER IF EXISTS `change_order_status` //
+CREATE TRIGGER `change_order_status`
+	AFTER INSERT
+	ON `vendor_order_customer_order`
+	FOR EACH ROW
+BEGIN
+	UPDATE customer_order SET status='IN_TRANSIT' WHERE id=new.customer_order_id;
+END;//
+
+--
+-- CHANGE STATUS in customer order on inserting customer payment  
+--
+DROP TRIGGER IF EXISTS `change_order_status` //
+CREATE TRIGGER `change_order_status`
+	AFTER INSERT
+	ON `customer_payment`
+	FOR EACH ROW
+BEGIN
+DECLARE status enum('PENDING','IN_TRANSIT','READY','DELIVERED')	;
+DECLARE amount_paid DECIMAL(12,2);
+DECLARE v_price DECIMAL(12,2);
+SET status = (SELECT status FROM customer_order WHERE id=new.order_id);
+SET amount_paid = (SELECT SUM(T.amount)
+    		  FROM customer_transaction AS T,
+		  customer_payment AS P
+		  WHERE P.order_id = new.order_id
+		  AND P.transaction_id = T.transaction_id);
+SET v_price = (SELECT V.price FROM books AS B, vehicle AS V , customer_order AS CO
+    	      WHERE V.id = B.vehicle_id and CO.id = B.customer_order_id and CO.id = new.order_id );
+	IF status='READY' THEN
+	   IF new.type = 'emi' OR (amount_paid=v_price) THEN
+	      UPDATE customer_order SET status='DELIVERED' WHERE id=new.order_id;
+	   END IF;
+	END IF;
 END;//
 
 DELIMITER ;
