@@ -1,4 +1,19 @@
 DELIMITER //
+--
+-- FUNCTION TO INCREMENT BY PERCENT
+--
+DROP FUNCTION IF EXISTS inc_by_percent;
+
+CREATE FUNCTION inc_by_percent(salary DECIMAL(12,2), percent DECIMAL(5,2)) RETURNS DECIMAL(12,2)
+
+BEGIN
+	SET salary = salary + salary*percent;
+	RETURN salary;
+END //
+
+--
+-- Validation Functions and Errors
+--
 
 DROP FUNCTION IF EXISTS check_phone_num;
 CREATE FUNCTION check_phone_num (phone_no VARCHAR(20), t_name VARCHAR(20)) RETURNS  VARCHAR(20)
@@ -119,6 +134,7 @@ END//
 --
 -- PROCEDURE TO FIND CUSTOMER WHO OPTED FOR emi AND NOT PAYED ANY PAYMENTS IN LAST MONTH
 --
+
 DROP PROCEDURE IF EXISTS pending_emi_payments;
 CREATE PROCEDURE pending_emi_payments()
 BEGIN
@@ -139,25 +155,14 @@ SET past_month = DATE_SUB( cur_date, INTERVAL 1 MONTH);
 	   and CP.type = 'emi'
 	   and CT.transaction_id = CP.transaction_id
 	   and CT.date NOT BETWEEN cur_date and past_month
-	   and E.emi = R.emi_id
-	   and E.customer_order_id = CO.id
+	   and E.id = R.emi_id
+	   and R.customer_order_id = CO.id
 	   and NOT ((E.no_of_installments*E.installment_amount) = (SELECT
 	       		SUM(T.amount)
 			FROM customer_transaction AS T
 			WHERE transaction_id = CT.transaction_id));
 END //
 
---
--- FUNCTION TO INCREMENT BY PERCENT
---
-DROP FUNCTION IF EXISTS inc_by_percent;
-
-CREATE FUNCTION inc_by_percent(salary DECIMAL(12,2), percent DECIMAL(5,2)) RETURNS DECIMAL(12,2)
-
-BEGIN
-	SET salary = salary + salary*percent;
-	RETURN salary;
-END //
 --
 -- PROCEDURE FOR INCREMENTING SALARY FOR PARTICULAR EMPLOYEE
 --
@@ -193,3 +198,4 @@ END //
 DELIMITER ;
 -- show procedure status \G;
 -- show function status \G
+
