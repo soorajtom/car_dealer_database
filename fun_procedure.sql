@@ -18,7 +18,6 @@ BEGIN
 	END;
 	END IF;
 	RETURN phone_no;
-
 END//
 
 CREATE OR REPLACE PROCEDURE check_email(IN email VARCHAR(255),
@@ -85,7 +84,7 @@ SET salary = (SELECT E.salary
     	     FROM employee AS E
 	     WHERE E.id=employee_id);
 SET _date = IF(ISNULL(payment_date), CURDATE(), payment_date);
-    IF salary>amount THEN
+    IF salary > amount THEN
        SIGNAL SQLSTATE VALUE '45000'
        SET MESSAGE_TEXT = 'THE EMPLOYEE IS PAID SALARY LESS THAN THE BASE SALARY';
     END IF;
@@ -101,6 +100,7 @@ INSERT INTO salary_transaction
        		      amount);
 INSERT INTO give_salary(employee_id, transaction_id)
        VALUES (employee_id, transaction_id);
+
 END //
 
 --
@@ -143,6 +143,44 @@ SET past_month = DATE_SUB( cur_date, INTERVAL 1 MONTH);
 			WHERE transaction_id = CT.transaction_id));
 END //
 
+--
+-- FUNCTION TO INCREMENT BY PERCENT
+--
+
+CREATE OR REPLACE FUNCTION inc_by_percent(salary DECIMAL(12,2), percent DECIMAL(5,2)) RETURNS DECIMAL(12,2)
+
+BEGIN
+	SET salary = salary + salary*percent;
+	RETURN salary;
+END //
+--
+-- PROCEDURE FOR INCREMENTING SALARY FOR PARTICULAR EMPLOYEE
+--
+
+CREATE OR REPLACE PROCEDURE salary_increment(IN empid INTEGER,
+       	  	  	    		     IN percent DECIMAL(12,2))
+BEGIN
+	UPDATE employee SET salary = inc_by_percent(salary,percent) WHERE id=empid; 
+END //
+
+--
+-- PROCEDURE FOR INCREMENTING SALARY FOR ALL EMPLOYEES
+--
+
+CREATE OR REPLACE PROCEDURE salary_increment(IN empid INTEGER,
+       	  	  	    		     IN percent DECIMAL(12,2))
+BEGIN
+	UPDATE employee SET salary = inc_by_percent(salary,percent);
+END //
+
+--
+-- PROCEDURE FOR DECREMENTING SALARY FOR PARTICULAR EMPLOYEE
+--
+CREATE OR REPLACE PROCEDURE salary_decrement(IN empid INTEGER,
+       	  	  	    		     IN percent DECIMAL(12,2))
+BEGIN
+	UPDATE employee SET salary = inc_by_percent(salary,(-percent)) WHERE id=empid; 
+END //
 
 DELIMITER ;
 -- show procedure status \G;
