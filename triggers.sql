@@ -141,6 +141,21 @@ SET v_id = (SELECT vehicle_id FROM books WHERE customer_order_id = new.order_id)
 	END IF;
     END IF;
 END;//
+--
+-- CHANGE STATUS IN customer order on reciving Vendor order status change
+--
+DROP TRIGGER IF EXISTS `change_order_status` //
+CREATE TRIGGER `change_order_status`
+	AFTER UPDATE
+	ON `vendor_order`
+	FOR EACH ROW
+BEGIN
+DECLARE order_id INT;
+SET order_id = (SELECT customer_order_id FROM vendor_order_customer_order WHERE vendor_order_id=new.id);
+    IF new.status = 'DELIVERED' THEN
+	UPDATE customer_order SET status='READY' WHERE id=order_id;
+    END IF;
+END;//
 
 DELIMITER ;
 -- show triggers \G;
