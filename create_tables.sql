@@ -114,20 +114,6 @@ CREATE TABLE `salary_transaction` (
   PRIMARY KEY (`transaction_id`)
 ) ;
 
-
---
--- Table structure for table `dealer_vendor_transaction`
---
-
-CREATE TABLE `dealer_vendor_transaction` (
-  `transaction_id` varchar(50) NOT NULL,
-  `bank` varchar(100) NOT NULL,
-  `date` date NOT NULL,
-  `account_number` varchar(50) NOT NULL,
-  `amount` decimal(12,2) NOT NULL,
-  PRIMARY KEY (`transaction_id`)
-);
-
 --
 -- Table structure for table `vehicle`
 --
@@ -294,11 +280,9 @@ CREATE TABLE `vendor_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vendor_id` int(11) NOT NULL,
   `vehicle_id` int(11) NOT NULL,
-  `transaction_id` varchar(50) NOT NULL,
   `status` enum('PENDING','DELIVERED','IN_TRANSIT') NOT NULL DEFAULT 'PENDING',
   `quantity` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`transaction_id`) REFERENCES `dealer_vendor_transaction` (`transaction_id`),
   FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`id`),
   FOREIGN KEY (`vendor_id`) REFERENCES `vehicle_vendor` (`id`)
 ) ;
@@ -312,4 +296,20 @@ CREATE TABLE `vendor_order_customer_order` (
   PRIMARY KEY (`vendor_order_id`, `customer_order_id`),
   FOREIGN KEY (`vendor_order_id`) REFERENCES `vendor_order` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`customer_order_id`) REFERENCES `customer_order` (`id`) ON DELETE CASCADE
+);
+
+
+--
+-- Table structure for table `dealer_vendor_transaction`
+--
+
+CREATE TABLE `dealer_vendor_transaction` (
+  `transaction_id` varchar(50) NOT NULL,
+  `vendor_order_id` int(11),
+  `bank` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `account_number` varchar(50) NOT NULL,
+  `amount` decimal(12,2) NOT NULL,
+  PRIMARY KEY (`transaction_id`),
+  FOREIGN KEY (`vendor_order_id`) REFERENCES `vendor_order` (`id`)
 );

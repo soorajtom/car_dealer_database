@@ -184,4 +184,29 @@ INSERT INTO `insurance_company`
 INSERT INTO `vehicle_insurance` 
 (`id`, `policy_name`, `coverage`, `insurance_company_id`) VALUES 
 ('1', 'Super 60', 'liability', '1'),
-('1', 'Super 60', 'liability', '1');
+('2', 'Auto Cover', 'collission', '2');
+
+--
+-- INSERTING DATA FOR INSURANCES AVAILABLE FOR VEHICLES
+--
+INSERT INTO `has_insurance` 
+(`customer_order_id`, `vehicle_insurance_id`, `renewal_date`) VALUES 
+('5', '1', '2018-12-03'),
+('6', '2', '2018-11-09');
+
+--
+-- INSERTING VENDOR DETAILS
+--
+INSERT INTO `vehicle_vendor` 
+(`id`, `address`, `date_of_join`, `name`, `email`, `comments`) VALUES 
+('1', 'P.O. Box 283 8562 Fusce Rd., Frederick Nebraska', '2017-01-06', 'Lykan', 'support@lykan.com', NULL),
+('2', '606-3727 Ullamcorper. Street, Roseville', '2017-01-06', 'Bugatti', 'sales@bugatti.com', NULL),
+('3', '7292 Dictum Av., San Antonio MI', '2017-01-06', 'Nissan', 'sales@nissan.com', NULL),
+('4', 'Ap #285-7193 Ullamcorper Avenue', '2017-01-06', 'Lamborghini', 'info@lamborghini.com', NULL),
+('5', 'Miami Beach North Dakota 58563', '2017-01-06', 'Hennessey', 'care@hennessey.com', NULL),
+('6', 'Arcu St., Rolling Hills Georgia', '2017-01-06', 'Ferrari', 'admin@ferrarri.com', NULL),
+('7', 'Nascetur St., Hawthorne Louisiana', '2017-01-06', 'McLaren', 'manager@mclaren.com', NULL),
+('8', 'Yorba Linda South Carolina 28423', '2017-01-06', 'Toyota', 'support@toyota.com', NULL);
+
+--
+-- INSRTING VENDOR
