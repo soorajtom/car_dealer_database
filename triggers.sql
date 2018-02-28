@@ -161,8 +161,8 @@ END;//
 --
 -- CHANGE STATUS IN customer order on inserting Vendor order 
 --
-DROP TRIGGER IF EXISTS `change_order_status` //
-CREATE TRIGGER `change_order_status`
+DROP TRIGGER IF EXISTS `change_order_status1` //
+CREATE TRIGGER `change_order_status1`
 	AFTER INSERT
 	ON `vendor_order_customer_order`
 	FOR EACH ROW
@@ -173,8 +173,8 @@ END;//
 --
 -- CHANGE STATUS in customer order on inserting Vendor order  
 --
-DROP TRIGGER IF EXISTS `change_order_status` //
-CREATE TRIGGER `change_order_status`
+DROP TRIGGER IF EXISTS `change_order_status2` //
+CREATE TRIGGER `change_order_status2`
 	AFTER INSERT
 	ON `vendor_order_customer_order`
 	FOR EACH ROW
@@ -185,8 +185,8 @@ END;//
 --
 -- CHANGE STATUS in customer order on inserting customer payment  
 --
-DROP TRIGGER IF EXISTS `change_order_status` //
-CREATE TRIGGER `change_order_status`
+DROP TRIGGER IF EXISTS `change_order_status3` //
+CREATE TRIGGER `change_order_status3`
 	AFTER INSERT
 	ON `customer_payment`
 	FOR EACH ROW
