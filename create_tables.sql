@@ -33,7 +33,7 @@ CREATE TABLE `customer` (
 CREATE TABLE `insurance_company` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(60) NOT NULL,
-  `contact_number` int(10) unsigned NOT NULL,
+  `contact_number` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 ) ;
 
