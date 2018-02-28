@@ -18,6 +18,7 @@ GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.salary_transaction TO account
 GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.customer_payment TO accountant;
 GRANT SELECT ON car_dealer.customer_order_view TO accountant;
 GRANT SELECT ON car_dealer.vehicle_emi_view TO accountant;
+GRANT SELECT ON car_dealer.vendor_order TO accountant;
 
 CREATE OR REPLACE ROLE broker;
 GRANT SELECT ON car_dealer.customer_order_view TO broker;
@@ -50,5 +51,5 @@ GRANT SELECT ON car_dealer.books TO insurance_agent;
 CREATE OR REPLACE ROLE vendor_company_dealer;
 GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.vehicle TO vendor_company_dealer;
 GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.vehicle_vendor TO vendor_company_dealer;
-GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.vehicle_order TO vendor_company_dealer;
+GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.vendor_order TO vendor_company_dealer;
 GRANT SELECT ON car_dealer.dealer_vendor_transaction TO vendor_company_dealer;
