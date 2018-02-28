@@ -87,22 +87,101 @@ VALUES (1, 'Seely Booth', '23A, BL street, Orleans', '80000', 'male', '35', 'bro
 --
 -- INSERTING DATA FOR SALARY TRANSACTIONS
 --
-INSERT INTO `salary_transaction` 
-(`transaction_id`, `bank`, `date`, `account_number`, `amount`) VALUES 
-('ACRAF23DB3C4', '0032', '2018-02-01', '1125689756523', '80000'),  -- 1
-('ACRAF23DB3D4', '0032', '2018-01-01', '1125689756523', '83000'),
-('ACRAF23DB3E4', '0032', '2017-12-01', '1125689756523', '90000'),
-('ACRAF23DB3F4', '0032', '2017-11-01', '1125689756523', '81000'),
-('ACRAF23DB3G4', '0032', '2017-10-01', '1125689756523', '85000'),
+-- insert_salary_payment(
+--        IN employee_id INT,
+--        IN transaction_id VARCHAR(50),
+-- 		  IN bank VARCHAR(100),
+-- 		  IN account_number VARCHAR(50),
+-- 		  IN payment_date DATE,
+-- 		  IN amount DECIMAL(12,2))
 
-('BCRAF23DB3C4', '0054', '2018-02-01', '2125689756523', '80000'), -- 5
-('BCRAF23DB3D4', '0054', '2018-01-01', '2125689756523', '83000'),
-('BCRAF23DB3E4', '0054', '2017-12-01', '2125689756523', '90000'),
-('BCRAF23DB3F4', '0054', '2017-11-01', '2125689756523', '81000'),
-('BCRAF23DB3G4', '0054', '2017-10-01', '2125689756523', '85000'),
+CALL insert_salary_payment(1, "ABCDEF123456", "0032", "256898456321", "2017-01-01", 86000);
+CALL insert_salary_payment(1, "ABCDEF125346", "0032", "256898456321", "2017-02-01", 87000);
+CALL insert_salary_payment(2, "ABCDEF124566", "0054", "256898456335", "2017-01-01", 129000);
+CALL insert_salary_payment(2, "ABCDEF123215", "0063", "256825456335", "2017-02-01", 128000);
+CALL insert_salary_payment(3, "ABCDEF123854", "0075", "256898452546", "2017-01-01", 76000);
+CALL insert_salary_payment(3, "ABCDEF123488", "0031", "256845524321", "2017-02-01", 76000);
+CALL insert_salary_payment(4, "ABCDEF122446", "0079", "424253556321", "2017-01-01", 113000);
+CALL insert_salary_payment(5, "ABCDEF123336", "0064", "424253556321", "2017-01-01", 84000);
 
-('CCRAF23DB3C4', '0035', '2018-02-01', '3125689756523', '120000'), -- 2
-('CCRAF23DB3D4', '0035', '2018-01-01', '3125689756523', '123000'),
-('CCRAF23DB3E4', '0035', '2017-12-01', '3125689756523', '130000'),
-('CCRAF23DB3F4', '0035', '2017-11-01', '3125689756523', '121000'),
-('CCRAF23DB3G4', '0035', '2017-10-01', '3125689756523', '125000');
+--
+-- INSERTING DATA FOR CUSTOMER ORDERS
+--
+INSERT INTO `customer_order` 
+(`id`, `ETA`, `status`, `date`, `customer_id`) VALUES 
+('1', '2018-05-28', 'PENDING', '2018-02-28', '1'),
+('2', '2018-04-18', 'PENDING', '2018-01-15', '3'),
+('3', '2018-03-08', 'PENDING', '2018-01-12', '5'),
+('4', '2018-02-28', 'PENDING', '2017-09-08', '2'),
+('5', '2017-12-03', 'DELIVERED', '2017-02-13', '4'),
+('6', '2017-11-09', 'DELIVERED', '2017-06-22', '5');
+
+--
+-- INSERING DATA FOR BOOKING TABLE
+--
+INSERT INTO `books` 
+(`vehicle_id`, `customer_order_id`, `color`) VALUES 
+('1', '1', 'white'),
+('3', '2', 'silver'),
+('5', '3', 'black'),
+('2', '4', 'golden'),
+('4', '5', 'white'),
+('7', '6', 'red');
+
+--
+-- INSERTING DATA FOR CUSTOMER PAYMENT
+--
+-- PROCEDURE insert_customer_payment(
+--        IN order_id INT,
+--        IN transaction_id VARCHAR(50),
+-- 		  IN type enum('advance','emi','normal'),
+-- 		  IN emi_id INT, 
+-- 		  IN bank VARCHAR(100),
+-- 		  IN account_number VARCHAR(50),
+-- 		  IN payment_date DATE,
+-- 		  IN amount DECIMAL(12,2))
+
+CALL insert_customer_payment(1, "ABCDEF123335", 'advance', NULL, "0051", "658951334568", "2018-02-28", 10000);
+CALL insert_customer_payment(2, "ABCDEF139535", 'advance', NULL, "0075", "657454534568", "2018-01-15", 20000);
+CALL insert_customer_payment(3, "ABCDEF243338", 'advance', NULL, "0035", "658534234568", "2018-01-12", 10000);
+CALL insert_customer_payment(4, "ABCDEF969938", 'advance', NULL, "0074", "658599684568", "2017-09-08", 30000);
+CALL insert_customer_payment(5, "ABCDEF127535", 'advance', NULL, "0014", "658453834568", "2017-02-13", 10000);
+CALL insert_customer_payment(5, "ABCDEF133775", 'normal', NULL, "0034", "655453334568", "2017-12-02", 9490000);
+CALL insert_customer_payment(6, "ABCDEF123439", 'advance', NULL, "0077", "655334578824", "2017-06-22", 120000);
+CALL insert_customer_payment(6, "ABCDEF153784", 'normal', NULL, "0096", "453383334568", "2017-11-09", 97380000);
+
+
+--
+-- INSERTING DATA FOR EMI PLANS
+--
+INSERT INTO `emi` 
+(`id`, `name`, `no_of_installments`, `installment_amount`) VALUES 
+('1', 'Mega 500 offer', '19', '500500'),
+('2', 'Egoista, no Ego', '24', '959000'),
+('3', 'Hennessey Venom on EMI', '30', '1574000');
+
+
+--
+-- INSERTING DATA FOR EMI SUPPORT FOR VEHICLES
+--
+INSERT INTO `has_offer` 
+(`emi_id`, `vehicle_id`) VALUES 
+('1', '4'),
+('2', '5'),
+('3', '6');
+
+--
+-- INSERTING DATA FOR INSURANCE COMPANY
+--
+INSERT INTO `insurance_company` 
+(`id`, `name`, `contact_number`) VALUES 
+('1', 'Tresslers Insurance', '9947286188'),
+('2', 'WillWall Digital Insurance', '8547275255');
+
+--
+-- INSERTING DATA FOR VEHICLE INSURANCES
+--
+INSERT INTO `vehicle_insurance` 
+(`id`, `policy_name`, `coverage`, `insurance_company_id`) VALUES 
+('1', 'Super 60', 'liability', '1'),
+('1', 'Super 60', 'liability', '1');
