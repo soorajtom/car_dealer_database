@@ -504,7 +504,7 @@ page_header($wg,$k="",$Ha=array(),$xg=""){global$ca,$ga,$b,$Ib,$y;page_headers()
 <html lang="en" dir="ltr">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="robots" content="noindex">
-<title>',$zg,'</title>
+<title>Dealerkar|DB editor</title>
 <link rel="stylesheet" type="text/css" href="',h(preg_replace("~\\?.*~","",ME)."?file=default.css&version=4.6.2&driver=mysql"),'">
 ',script_src(preg_replace("~\\?.*~","",ME)."?file=functions.js&version=4.6.2&driver=mysql");if($b->head()){echo'<link rel="shortcut icon" type="image/x-icon" href="',h(preg_replace("~\\?.*~","",ME)."?file=favicon.ico&version=4.6.2&driver=mysql"),'">
 <link rel="apple-touch-icon" href="',h(preg_replace("~\\?.*~","",ME)."?file=favicon.ico&version=4.6.2&driver=mysql"),'">

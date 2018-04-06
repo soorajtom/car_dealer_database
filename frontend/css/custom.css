@@ -1,0 +1,9 @@
+.jumboimg
+{
+	background-image: url("/img/jumbol.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    /*background-color: rgba(255,255,0,0.5);*/
+    /*-webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: grey;*/
+}
