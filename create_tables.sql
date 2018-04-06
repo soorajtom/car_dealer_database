@@ -179,7 +179,7 @@ CREATE TABLE `employee` (
   `salary` decimal(12,2) NOT NULL,
   `gender` enum('male','female','other') DEFAULT NULL,
   `age` int(11) NOT NULL,
-  `dept` enum('admin','broker','auxiliary','human_resource') NOT NULL,
+  `dept` enum('admin','broker','auxiliary','human_resource', 'manager') NOT NULL,
   `policy_manager` int(11) NOT NULL,
   `policy_join_date` date NOT NULL,
   `policy_renewal_date` date NOT NULL,
