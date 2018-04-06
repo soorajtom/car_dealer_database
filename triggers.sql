@@ -154,7 +154,23 @@ BEGIN
 DECLARE order_id INT;
 SET order_id = (SELECT customer_order_id FROM vendor_order_customer_order WHERE vendor_order_id=new.id);
     IF new.status = 'DELIVERED' THEN
-	UPDATE customer_order SET status='READY' WHERE id=order_id;
+		UPDATE customer_order SET status='READY' WHERE id=order_id;
+    END IF;
+END;//
+
+--
+-- CHANGE STATUS IN customer order on reciving Vendor order status change
+--
+DROP TRIGGER IF EXISTS `change_order_status2` //
+CREATE TRIGGER `change_order_status2`
+	AFTER INSERT
+	ON `vendor_order`
+	FOR EACH ROW
+BEGIN
+DECLARE order_id INT;
+SET order_id = (SELECT customer_order_id FROM vendor_order_customer_order WHERE vendor_order_id=new.id);
+    IF new.status = 'DELIVERED' THEN
+		UPDATE customer_order SET status='READY' WHERE id=order_id;
     END IF;
 END;//
 
@@ -167,19 +183,11 @@ CREATE TRIGGER `change_order_status1`
 	ON `vendor_order_customer_order`
 	FOR EACH ROW
 BEGIN
-	UPDATE customer_order SET status='IN_TRANSIT' WHERE id=new.customer_order_id;
-END;//
-
---
--- CHANGE STATUS in customer order on inserting Vendor order  
---
-DROP TRIGGER IF EXISTS `change_order_status2` //
-CREATE TRIGGER `change_order_status2`
-	AFTER INSERT
-	ON `vendor_order_customer_order`
-	FOR EACH ROW
-BEGIN
-	UPDATE customer_order SET status='IN_TRANSIT' WHERE id=new.customer_order_id;
+	DECLARE status_ enum('PENDING','IN_TRANSIT','READY','DELIVERED');
+	SET status_ = (SELECT status FROM customer_order WHERE id=new.customer_order_id);
+	IF (status_='PENDING' ) THEN
+		UPDATE customer_order SET status='IN_TRANSIT' WHERE id=new.customer_order_id;
+	END IF;
 END;//
 
 --
@@ -191,10 +199,10 @@ CREATE TRIGGER `change_order_status3`
 	ON `customer_payment`
 	FOR EACH ROW
 BEGIN
-DECLARE status enum('PENDING','IN_TRANSIT','READY','DELIVERED')	;
+DECLARE status_ enum('PENDING','IN_TRANSIT','READY','DELIVERED')	;
 DECLARE amount_paid DECIMAL(12,2);
 DECLARE v_price DECIMAL(12,2);
-SET status = (SELECT status FROM customer_order WHERE id=new.order_id);
+SET status_ = (SELECT status FROM customer_order WHERE id=new.order_id);
 SET amount_paid = (SELECT SUM(T.amount)
     		  FROM customer_transaction AS T,
 		  customer_payment AS P
@@ -202,10 +210,28 @@ SET amount_paid = (SELECT SUM(T.amount)
 		  AND P.transaction_id = T.transaction_id);
 SET v_price = (SELECT V.price FROM books AS B, vehicle AS V , customer_order AS CO
     	      WHERE V.id = B.vehicle_id and CO.id = B.customer_order_id and CO.id = new.order_id );
-	IF status='READY' THEN
+	IF (status_='READY') THEN
 	   IF new.type = 'emi' OR (amount_paid=v_price) THEN
 	      UPDATE customer_order SET status='DELIVERED' WHERE id=new.order_id;
 	   END IF;
+	END IF;
+END;//
+
+--
+-- CHECK STATUS of customer order on inserting customer payment (type ready)  
+--
+
+DROP TRIGGER IF EXISTS `check_for_normal_payment` //
+CREATE TRIGGER `check_for_normal_payment`
+	BEFORE INSERT
+	ON `customer_payment`
+	FOR EACH ROW
+BEGIN
+	DECLARE status_ enum('PENDING','IN_TRANSIT','READY','DELIVERED')	;
+	SET status_ = (SELECT status FROM customer_order WHERE id=new.order_id);
+	IF ((new.type = 'normal') AND (NOT status_='READY')) THEN
+		SIGNAL SQLSTATE VALUE '45000'
+	   	SET MESSAGE_TEXT = '[table : customer_payment] - Your Car has not reached showroom yet';
 	END IF;
 END;//
 
