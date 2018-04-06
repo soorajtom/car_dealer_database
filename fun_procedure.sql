@@ -78,9 +78,8 @@ INSERT INTO customer_transaction
 INSERT INTO customer_payment(transaction_id, order_id, type)
        VALUES (transaction_id, order_id, type);
        IF (type='emi' AND (NOT EXISTS (SELECT customer_order_id FROM registered))) THEN
-       	  INSERT INTO registered(customer_order_id,
-				emi_id) VALUEScustomecustomer_orderr_order
-				(order_id, emi_id);
+       	  INSERT INTO registered(customer_order_id, emi_id)
+	  VALUES (order_id, emi_id);
        END IF;
 END //
 
