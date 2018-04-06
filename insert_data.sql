@@ -100,20 +100,20 @@ INSERT INTO `managed_by` (`employee_id`, `managed_by`) VALUES
 -- 		  IN payment_date DATE,
 -- 		  IN amount DECIMAL(12,2))
 
-CALL insert_salary_payment(1, "ABCDEF123456", "0032", "256898456321", "2017-01-01", 86000);
-CALL insert_salary_payment(1, "ABCDEF125346", "0032", "256898456321", "2017-02-01", 87000);
-CALL insert_salary_payment(2, "ABCDEF124566", "0054", "256898456335", "2017-01-01", 129000);
-CALL insert_salary_payment(2, "ABCDEF123215", "0063", "256825456335", "2017-02-01", 128000);
-CALL insert_salary_payment(3, "ABCDEF123854", "0075", "256898452546", "2017-01-01", 76000);
-CALL insert_salary_payment(3, "ABCDEF123488", "0031", "256845524321", "2017-02-01", 76000);
-CALL insert_salary_payment(4, "ABCDEF122446", "0079", "424253556321", "2017-01-01", 113000);
-CALL insert_salary_payment(5, "ABCDEF123336", "0064", "424253556321", "2017-01-01", 84000);
+CALL insert_salary_payment(5, "ABCDEF123456", "0032", "256898456321", "2017-01-01", 86000);
+CALL insert_salary_payment(5, "ABCDEF125346", "0032", "256898456321", "2017-02-01", 87000);
+CALL insert_salary_payment(6, "ABCDEF124566", "0054", "256898456335", "2017-01-01", 129000);
+CALL insert_salary_payment(6, "ABCDEF123215", "0063", "256825456335", "2017-02-01", 128000);
+CALL insert_salary_payment(7, "ABCDEF123854", "0075", "256898452546", "2017-01-01", 76000);
+CALL insert_salary_payment(7, "ABCDEF123488", "0031", "256845524321", "2017-02-01", 76000);
+CALL insert_salary_payment(8, "ABCDEF122446", "0079", "424253556321", "2017-01-01", 113000);
+CALL insert_salary_payment(9, "ABCDEF123336", "0064", "424253556321", "2017-01-01", 84000);
 
 --
 -- INSERTING DATA FOR CUSTOMER ORDERS
 --
 INSERT INTO `customer_order` 
-(`id`, `ETA`, `status`, `date`, `customer_id`, `employee_id`) VALUES 
+(`id`, `ETA`, `status`, `date`, `customer_id`, `sold_by`) VALUES 
 ('1', '2018-05-28', 'PENDING', '2018-02-28', '1', '5'),
 ('2', '2018-04-18', 'PENDING', '2018-01-15', '3', '6'),
 ('3', '2018-03-08', 'PENDING', '2018-01-12', '5', '5'),
