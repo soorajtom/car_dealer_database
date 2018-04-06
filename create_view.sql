@@ -1,11 +1,28 @@
 USE car_dealer ;
+
+
+DELIMITER //
+--
+-- FUNCTION TO GET EMI NAME GIVEN A VALID ORDER ID
+--
+DROP FUNCTION IF EXISTS get_emi;
+
+CREATE FUNCTION get_emi(order_id INT(11)) RETURNS VARCHAR(50)
+
+BEGIN
+	DECLARE name VARCHAR (50);
+	SET  name = (SELECT E.name FROM emi AS E, registered AS R WHERE E.id = R.emi_id AND R.customer_order_id = order_id);
+	RETURN name;
+END //
+
+DELIMITER ;
 --
 -- VIEW FOR CUSTOMER PAYMENT 
 --
 CREATE OR REPLACE VIEW customer_payment_view AS
        SELECT C.name AS customer_name,
        	      P.transaction_id AS transaction_id,
-	      IF (P.type='emi', E.name, NULL) AS emi_name,
+	      IF (P.type='emi', get_emi(CO.id), 'NA') AS emi_name,
 	      T.bank AS bank,
 	      T.account_number AS account_number,
        	      T.date AS payment_date,
@@ -13,14 +30,10 @@ CREATE OR REPLACE VIEW customer_payment_view AS
        FROM customer_payment as P,
       	    customer AS C ,
 	    customer_transaction AS T,
-	    emi AS E,
-	    registered AS R,
 	    customer_order AS CO
        WHERE CO.id = P.order_id
 	    and P.transaction_id=T.transaction_id
-	    and IF (P.type='emi', R.emi_id = E.id
-	    and CO.id = R.customer_order_id
-	    and CO.customer_id = C.id, True);
+	    and C.id = CO.customer_id;
 --
 -- VIEW FOR SALARY PAYMENTS
 --
