@@ -33,6 +33,42 @@ VALUES ('1', 'black'),
 ('8', 'silver');
 
 --
+-- INSERTING DATA FOR EMI PLANS
+--
+INSERT INTO `emi` 
+(`id`, `name`, `no_of_installments`, `installment_amount`) VALUES 
+('1', 'Mega 500 offer', '19', '500500'),
+('2', 'Egoista, no Ego', '24', '959000'),
+('3', 'Hennessey Venom on EMI', '30', '1574000');
+
+
+--
+-- INSERTING DATA FOR EMI SUPPORT FOR VEHICLES
+--
+INSERT INTO `has_offer` 
+(`emi_id`, `vehicle_id`) VALUES 
+('1', '4'),
+('2', '5'),
+('3', '6');
+
+--
+-- INSERTING DATA FOR INSURANCE COMPANY
+--
+INSERT INTO `insurance_company` 
+(`id`, `name`, `contact_number`) VALUES 
+('1', 'Tresslers Insurance', '9947286188'),
+('2', 'WillWall Digital Insurance', '8547275255');
+
+--
+-- INSERTING DATA FOR VEHICLE INSURANCES
+--
+INSERT INTO `vehicle_insurance` 
+(`id`, `policy_name`, `coverage`, `insurance_company_id`) VALUES 
+('1', 'Super 60', 'liability', '1'),
+('2', 'Auto Cover', 'collission', '2');
+
+
+--
 -- INSERTING CUSTOMER DATA
 --
 INSERT INTO `customer` (`id`, `name`, `contact_number`, `address`, `email`, `age`) 
@@ -110,7 +146,7 @@ CALL insert_salary_payment(8, "ABCDEF122446", "0079", "424253556321", "2017-01-0
 CALL insert_salary_payment(9, "ABCDEF123336", "0064", "424253556321", "2017-01-01", 84000);
 
 --
--- INSERTING DATA FOR CUSTOMER ORDERS
+-- INSERTING DATA FOR CUSTOMER ORDERS 5 & 6 DELIVERED
 --
 INSERT INTO `customer_order` 
 (`id`, `ETA`, `status`, `date`, `customer_id`, `sold_by`) VALUES 
@@ -118,8 +154,8 @@ INSERT INTO `customer_order`
 ('2', '2018-04-18', 'PENDING', '2018-01-15', '3', '6'),
 ('3', '2018-03-08', 'PENDING', '2018-01-12', '5', '5'),
 ('4', '2018-02-28', 'PENDING', '2017-09-08', '2', '6'),
-('5', '2017-12-03', 'DELIVERED', '2017-02-13', '4', '5'),
-('6', '2017-11-09', 'DELIVERED', '2017-06-22', '5', '6');
+('5', '2017-12-03', 'PENDING', '2017-02-13', '4', '5'), 
+('6', '2017-11-09', 'PENDING', '2017-06-22', '5', '6');
 
 --
 -- INSERING DATA FOR BOOKING TABLE
@@ -133,71 +169,6 @@ INSERT INTO `books`
 ('4', '5', 'white'),
 ('7', '6', 'red');
 
---
--- INSERTING DATA FOR CUSTOMER PAYMENT
---
--- PROCEDURE insert_customer_payment(
---        IN order_id INT,
---        IN transaction_id VARCHAR(50),
--- 		  IN type enum('advance','emi','normal'),
--- 		  IN emi_id INT, 
--- 		  IN bank VARCHAR(100),
--- 		  IN account_number VARCHAR(50),
--- 		  IN payment_date DATE,
--- 		  IN amount DECIMAL(12,2))
-
-CALL insert_customer_payment(1, "ABCDEF123335", 'advance', NULL, "0051", "658951334568", "2018-02-28", 10000);
-CALL insert_customer_payment(2, "ABCDEF139535", 'advance', NULL, "0075", "657454534568", "2018-01-15", 20000);
-CALL insert_customer_payment(3, "ABCDEF243338", 'advance', NULL, "0035", "658534234568", "2018-01-12", 10000);
-CALL insert_customer_payment(4, "ABCDEF969938", 'advance', NULL, "0074", "658599684568", "2017-09-08", 30000);
-CALL insert_customer_payment(5, "ABCDEF127535", 'advance', NULL, "0014", "658453834568", "2017-02-13", 10000);
-CALL insert_customer_payment(5, "ABCDEF133775", 'normal', NULL, "0034", "655453334568", "2017-12-02", 9490000);
-CALL insert_customer_payment(6, "ABCDEF123439", 'advance', NULL, "0077", "655334578824", "2017-06-22", 120000);
-CALL insert_customer_payment(6, "ABCDEF153784", 'normal', NULL, "0096", "453383334568", "2017-11-09", 97380000);
-
-
---
--- INSERTING DATA FOR EMI PLANS
---
-INSERT INTO `emi` 
-(`id`, `name`, `no_of_installments`, `installment_amount`) VALUES 
-('1', 'Mega 500 offer', '19', '500500'),
-('2', 'Egoista, no Ego', '24', '959000'),
-('3', 'Hennessey Venom on EMI', '30', '1574000');
-
-
---
--- INSERTING DATA FOR EMI SUPPORT FOR VEHICLES
---
-INSERT INTO `has_offer` 
-(`emi_id`, `vehicle_id`) VALUES 
-('1', '4'),
-('2', '5'),
-('3', '6');
-
---
--- INSERTING DATA FOR INSURANCE COMPANY
---
-INSERT INTO `insurance_company` 
-(`id`, `name`, `contact_number`) VALUES 
-('1', 'Tresslers Insurance', '9947286188'),
-('2', 'WillWall Digital Insurance', '8547275255');
-
---
--- INSERTING DATA FOR VEHICLE INSURANCES
---
-INSERT INTO `vehicle_insurance` 
-(`id`, `policy_name`, `coverage`, `insurance_company_id`) VALUES 
-('1', 'Super 60', 'liability', '1'),
-('2', 'Auto Cover', 'collission', '2');
-
---
--- INSERTING DATA FOR INSURANCES AVAILABLE FOR VEHICLES
---
-INSERT INTO `has_insurance` 
-(`customer_order_id`, `vehicle_insurance_id`, `renewal_date`) VALUES 
-('5', '1', '2018-12-03'),
-('6', '2', '2018-11-09');
 
 --
 -- INSERTING VENDOR DETAILS
@@ -218,8 +189,8 @@ INSERT INTO `vehicle_vendor`
 --
 INSERT INTO `vendor_order` 
 (`id`, `vendor_id`, `vehicle_id`, `status`, `quantity`) VALUES 
-('1', '3', '4', 'DELIVERED', '1'),
-('2', '6', '7', 'DELIVERED', '1'),
+('1', '3', '4', 'PENDING', '1'),
+('2', '6', '7', 'PENDING', '1'),
 ('3', '8', '1', 'PENDING', '1'),
 ('4', '2', '3', 'PENDING', '1'),
 ('5', '4', '5', 'PENDING', '1'),
@@ -239,6 +210,13 @@ INSERT INTO `vendor_order_customer_order`
 ('6', '4');
 
 --
+-- UPDATES vender_order on arrival of vehicle
+--
+
+UPDATE `vendor_order` SET `status` = 'DELIVERED' WHERE id = 1;
+UPDATE `vendor_order` SET `status` = 'DELIVERED' WHERE id = 2;
+
+--
 -- INSERTING DATA FOR DEALER VENDOR TRANSACTIONS
 --
 INSERT INTO `dealer_vendor_transaction` 
@@ -249,3 +227,39 @@ INSERT INTO `dealer_vendor_transaction`
 ('ABCDE56024034', '3', '0075', '2018-03-01', '546521684326', '420000'),
 ('ABCDE59603234', '4', '0034', '2018-01-18', '546521684326', '600000'),
 ('ABCDE59500634', '5', '0097', '2018-01-15', '546521684326', '600000');
+
+INSERT INTO `registered` (`customer_order_id`, `emi_id`) VALUES
+(5, 1);
+
+--
+-- INSERTING DATA FOR CUSTOMER PAYMENT
+--
+-- PROCEDURE insert_customer_payment(
+--        IN order_id INT,
+--        IN transaction_id VARCHAR(50),
+-- 		  IN type enum('advance','emi','normal'),
+-- 		  IN emi_id INT, 
+-- 		  IN bank VARCHAR(100),
+-- 		  IN account_number VARCHAR(50),
+-- 		  IN payment_date DATE,
+-- 		  IN amount DECIMAL(12,2))
+
+CALL insert_customer_payment(1, "ABCDEF123335", 'advance', NULL, "0051", "658951334568", "2018-02-28", 10000);
+CALL insert_customer_payment(2, "ABCDEF139535", 'advance', NULL, "0075", "657454534568", "2018-01-15", 20000);
+CALL insert_customer_payment(3, "ABCDEF243338", 'advance', NULL, "0035", "658534234568", "2018-01-12", 10000);
+CALL insert_customer_payment(4, "ABCDEF969938", 'advance', NULL, "0074", "658599684568", "2017-09-08", 30000);
+CALL insert_customer_payment(5, "ABCDEF127535", 'advance', NULL, "0014", "658453834568", "2017-02-13", 10000);
+CALL insert_customer_payment(5, "ABCDEF133775", 'emi', NULL, "0034", "655453334568", "2017-12-02", 500500);
+CALL insert_customer_payment(6, "ABCDEF123439", 'advance', NULL, "0077", "655334578824", "2017-06-22", 120000);
+CALL insert_customer_payment(6, "ABCDEF153784", 'normal', NULL, "0096", "453383334568", "2017-11-09", 97380000);
+
+
+--
+-- INSERTING DATA FOR INSURANCES AVAILABLE FOR VEHICLES
+--
+INSERT INTO `has_insurance` 
+(`customer_order_id`, `vehicle_insurance_id`, `renewal_date`) VALUES 
+('5', '1', '2018-12-03'),
+('6', '2', '2018-11-09');
+
+
