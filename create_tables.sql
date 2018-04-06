@@ -89,18 +89,7 @@ CREATE TABLE `emi` (
   PRIMARY KEY (`id`)
 ) ;
 
---
--- Table structure for table `manager`
---
 
-CREATE TABLE `manager` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `address` varchar(511) NOT NULL,
-  `salary` decimal(12,2) NOT NULL,
-  `gender` enum('male','female','other') DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ;
 --
 -- Table structure for table `salary_transaction`
 --
@@ -147,6 +136,8 @@ CREATE TABLE `customer_order` (
   `status` enum('PENDING','IN_TRANSIT', 'READY','DELIVERED') NOT NULL,
   `date` date NOT NULL,
   `customer_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  FOREIGN KEY (`sold_by`) REFERENCES `employee` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
@@ -189,18 +180,28 @@ CREATE TABLE `employee` (
   `gender` enum('male','female','other') DEFAULT NULL,
   `age` int(11) NOT NULL,
   `dept` enum('admin','broker','auxiliary','human_resource') NOT NULL,
-  `managed_by` int(11) DEFAULT NULL,
   `policy_manager` int(11) NOT NULL,
   `policy_join_date` date NOT NULL,
   `policy_renewal_date` date NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`managed_by`) REFERENCES `manager` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   FOREIGN KEY (`policy_manager`) REFERENCES `policy_manager` (`id`) ON UPDATE CASCADE
 ) ;
+--
+-- Table for storing relationship of manager_employee
+--
+CREATE TABLE `managed_by`(
+  `employee_id` int(11) NOT NULL,
+  `managed_by` int(11) ,
+  PRIMARY KEY (`employee_id`), 
+  INDEX (`managed_by`)
+  FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`managed_by`) REFERENCES `employee` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+);
 
 --
 -- Table structure for table `dependants`
 --
+
 CREATE TABLE `dependants` (
   `name` varchar(60) NOT NULL,
   `age` int(11) NOT NULL,
