@@ -64,6 +64,11 @@ CREATE PROCEDURE insert_customer_payment(
 		  IN amount DECIMAL(12,2))
 BEGIN
 DECLARE _date DATE ;
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+END;
+START TRANSACTION;
 SET _date = IF(ISNULL(payment_date), CURDATE(), payment_date);
 INSERT INTO customer_transaction
        (transaction_id,
@@ -81,6 +86,7 @@ INSERT INTO customer_payment(transaction_id, order_id, type)
        	  INSERT INTO registered(customer_order_id, emi_id)
 	  VALUES (order_id, emi_id);
        END IF;
+COMMIT;
 END //
 
 -- 
@@ -97,6 +103,11 @@ CREATE PROCEDURE insert_salary_payment(
 BEGIN
 DECLARE salary DECIMAL(12,2) ;
 DECLARE _date DATE ;
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+END;
+START TRANSACTION;
 SET salary = (SELECT E.salary
     	     FROM employee AS E
 	     WHERE E.id=employee_id);
@@ -111,13 +122,12 @@ INSERT INTO salary_transaction
        date,
        account_number,
        amount) VALUES (transaction_id,
-       	       	      bank,
-		      _date,
+       	       	      bank, _date,
        		      account_number,
        		      amount);
 INSERT INTO give_salary(employee_id, transaction_id)
        VALUES (employee_id, transaction_id);
-
+COMMIT;
 END //
 
 --
