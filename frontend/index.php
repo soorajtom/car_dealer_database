@@ -43,18 +43,18 @@ if ($conn->connect_error) {
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home
+              <a class="nav-link" href="/">Home
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="check_book.php">Check booking status</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
+              <a class="nav-link" href="contact.php">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
+              <a class="nav-link" href="dbedit.php">Admin Area</a>
             </li>
           </ul>
         </div>
@@ -107,7 +107,7 @@ if ($conn->connect_error) {
               </p>
             </div>
             <div class="card-footer">
-              <a href="vehicle.php?vid=<?php echo $row['id']; ?>" class="btn btn-primary">Find Out More!</a>
+              <a href="vehicle.php?vid=<?php echo $row['id']; ?>" class="btn btn-primary">More</a>
             </div>
           </div>
         </div>
