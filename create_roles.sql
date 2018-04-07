@@ -61,11 +61,7 @@ GRANT SELECT ON car_dealer.dealer_vendor_transaction TO vendor_company_dealer;
 -- CREATING USER
 --
 
-CREATE OR REPLACE FUNCTION get_username() RETURNS VARCHAR(20) 
-RETURN SUBSTRING_INDEX(USER(), '@', 1) ;
-
 DELIMITER //
-
 
 CREATE OR REPLACE PROCEDURE create_user( IN username VARCHAR(30),
        	  	 	     IN `password` VARCHAR(30), IN role VARCHAR(30))
