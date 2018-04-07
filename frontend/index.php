@@ -87,7 +87,7 @@ if ($conn->connect_error) {
         </div>
       </header>
 
-      <!-- <h2>Latest deals</h2> -->
+      <h2>Latest deals</h2>
 
       <!-- Page Features -->
       <div class="row text-center">
