@@ -20,7 +20,7 @@ CREATE TABLE `customer` (
   `contact_number` varchar(20) NOT NULL,
   `address` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `age` int(11) NOT NULL,
+  `age` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE(`email`)
 );
@@ -74,7 +74,7 @@ CREATE TABLE `customer_transaction` (
   `bank` varchar(100) NOT NULL,
   `date` date NOT NULL,
   `account_number` varchar(50) NOT NULL,
-  `amount` decimal(12,2) NOT NULL,
+  `amount` decimal(12,2) UNSIGNED NOT NULL,
   PRIMARY KEY (`transaction_id`)
 ) ;
 
@@ -84,8 +84,8 @@ CREATE TABLE `customer_transaction` (
 CREATE TABLE `emi` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `no_of_installments` int(11) NOT NULL,
-  `installment_amount` decimal(12,2) NOT NULL,
+  `no_of_installments` int(11) UNSIGNED NOT NULL,
+  `installment_amount` decimal(12,2) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 ) ;
 
@@ -99,7 +99,7 @@ CREATE TABLE `salary_transaction` (
   `bank` varchar(100) NOT NULL,
   `date` date NOT NULL,
   `account_number` varchar(50) NOT NULL,
-  `amount` decimal(12,2) NOT NULL,
+  `amount` decimal(12,2) UNSIGNED NOT NULL,
   PRIMARY KEY (`transaction_id`)
 ) ;
 
@@ -110,11 +110,11 @@ CREATE TABLE `salary_transaction` (
 CREATE TABLE `vehicle` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `price` decimal(12,2) NOT NULL,
-  `mileage` decimal(5,2) NOT NULL,
-  `cylinder_vol` INT(11) NOT NULL,
-  `transmission` int(11) NOT NULL DEFAULT '5',
-  `max_speed` int(11) NOT NULL,
+  `price` decimal(12,2) UNSIGNED NOT NULL,
+  `mileage` decimal(5,2) UNSIGNED NOT NULL,
+  `cylinder_vol` INT(11) UNSIGNED NOT NULL,
+  `transmission` int(11) UNSIGNED NOT NULL DEFAULT '5',
+  `max_speed` int(11) UNSIGNED NOT NULL,
   `particulars` varchar(511) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ;
@@ -133,9 +133,9 @@ CREATE TABLE `employee` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `address` varchar(511) NOT NULL,
-  `salary` decimal(12,2) NOT NULL,
+  `salary` decimal(12,2) UNSIGNED NOT NULL,
   `gender` enum('male','female','other') DEFAULT NULL,
-  `age` int(11) NOT NULL,
+  `age` int(11) UNSIGNED NOT NULL,
   `dept` enum('admin','broker','auxiliary','human_resource', 'manager', 'accountant') NOT NULL,
   `policy_manager` int(11) NOT NULL,
   `policy_join_date` date NOT NULL,
@@ -204,7 +204,7 @@ CREATE TABLE `managed_by`(
 
 CREATE TABLE `dependants` (
   `name` varchar(60) NOT NULL,
-  `age` int(11) NOT NULL,
+  `age` int(11) UNSIGNED  NOT NULL,
   `employee_id` int(11) NOT NULL,
   FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE,
   PRIMARY KEY (`employee_id`, `name`)
@@ -282,7 +282,7 @@ CREATE TABLE `vendor_order` (
   `vendor_id` int(11) NOT NULL,
   `vehicle_id` int(11) NOT NULL,
   `status` enum('PENDING','DELIVERED','IN_TRANSIT') NOT NULL DEFAULT 'PENDING',
-  `quantity` int(11) NOT NULL,
+  `quantity` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`vehicle_id`) REFERENCES `vehicle` (`id`),
   FOREIGN KEY (`vendor_id`) REFERENCES `vehicle_vendor` (`id`)
@@ -310,7 +310,7 @@ CREATE TABLE `dealer_vendor_transaction` (
   `bank` varchar(100) NOT NULL,
   `date` date NOT NULL,
   `account_number` varchar(50) NOT NULL,
-  `amount` decimal(12,2) NOT NULL,
+  `amount` decimal(12,2) UNSIGNED NOT NULL,
   PRIMARY KEY (`transaction_id`),
   FOREIGN KEY (`vendor_order_id`) REFERENCES `vendor_order` (`id`)
 );
