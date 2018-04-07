@@ -376,7 +376,7 @@ queries("KILL ".number($X));}function
 connection_id(){return"SELECT CONNECTION_ID()";}function
 max_connections(){global$e;return$e->result("SELECT @@max_connections");}$y="sql";$Lg=array();$Yf=array();foreach(array('Numbers'=>array("tinyint"=>3,"smallint"=>5,"mediumint"=>8,"int"=>10,"bigint"=>20,"decimal"=>66,"float"=>12,"double"=>21),'Date and time'=>array("date"=>10,"datetime"=>19,"timestamp"=>19,"time"=>10,"year"=>4),'Strings'=>array("char"=>255,"varchar"=>65535,"tinytext"=>255,"text"=>65535,"mediumtext"=>16777215,"longtext"=>4294967295),'Lists'=>array("enum"=>65535,"set"=>64),'Binary'=>array("bit"=>20,"binary"=>255,"varbinary"=>65535,"tinyblob"=>255,"blob"=>65535,"mediumblob"=>16777215,"longblob"=>4294967295),'Geometry'=>array("geometry"=>0,"point"=>0,"linestring"=>0,"polygon"=>0,"multipoint"=>0,"multilinestring"=>0,"multipolygon"=>0,"geometrycollection"=>0),)as$z=>$X){$Lg+=$X;$Yf[$z]=array_keys($X);}$Sg=array("unsigned","zerofill","unsigned zerofill");$ke=array("=","<",">","<=",">=","!=","LIKE","LIKE %%","REGEXP","IN","FIND_IN_SET","IS NULL","NOT LIKE","NOT REGEXP","NOT IN","IS NOT NULL","SQL");$Bc=array("char_length","date","from_unixtime","lower","round","floor","ceil","sec_to_time","time_to_sec","upper");$Fc=array("avg","count","count distinct","group_concat","max","min","sum");$Pb=array(array("char"=>"md5/sha1/password/encrypt/uuid","binary"=>"md5/sha1","date|time"=>"now",),array(number_type()=>"+/-","date"=>"+ interval/- interval","time"=>"addtime/subtime","char|text"=>"concat",));}define("SERVER",$_GET[DRIVER]);define("DB",$_GET["db"]);define("ME",preg_replace('~^[^?]*/([^?]*).*~','\\1',$_SERVER["REQUEST_URI"]).'?'.(sid()?SID.'&':'').(SERVER!==null?DRIVER."=".urlencode(SERVER).'&':'').(isset($_GET["username"])?"username=".urlencode($_GET["username"]).'&':'').(DB!=""?'db='.urlencode(DB).'&'.(isset($_GET["ns"])?"ns=".urlencode($_GET["ns"])."&":""):''));$ga="4.6.2";class
 Adminer{var$operators;function
-name(){return"Car_dealer_databse";}function
+name(){return"Dealerkar";}function
 credentials(){return
 array(SERVER,$_GET["username"],get_password());}function
 connectSsl(){}function
@@ -483,9 +483,9 @@ dumpHeaders($Pc,$Nd=false){$ye=$_POST["output"];$kc=(preg_match('~sql~',$_POST["
 importServerPath(){return"adminer.sql";}function
 homepage(){echo'<p class="links">'.($_GET["ns"]==""&&support("database")?'<a href="'.h(ME).'database=">'.'Alter database'."</a>\n":""),(support("scheme")?"<a href='".h(ME)."scheme='>".($_GET["ns"]!=""?'Alter schema':'Create schema')."</a>\n":""),($_GET["ns"]!==""?'<a href="'.h(ME).'schema=">'.'Database schema'."</a>\n":""),(support("privileges")?"<a href='".h(ME)."privileges='>".'Privileges'."</a>\n":"");return
 true;}function
-navigation($Md){global$ga,$y,$Ib,$e;echo'<span id="change_later" style="font-weight:bold">
+navigation($Md){global$ga,$y,$Ib,$e;echo'<h2 id="change_later" style="font-weight:bold">
 ',$this->name(),'
-</span>
+</h2>
 ';if($Md=="auth"){$uc=true;foreach((array)$_SESSION["pwds"]as$dh=>$Hf){foreach($Hf
 as$O=>$Zg){foreach($Zg
 as$V=>$G){if($G!==null){if($uc){echo"<p id='logins'>".script("mixin(qs('#logins'), {onmouseover: menuOver, onmouseout: menuOut});");$uc=false;}$wb=$_SESSION["db"][$dh][$O][$V];foreach(($wb?array_keys($wb):array(""))as$i)echo"<a href='".h(auth_url($dh,$O,$V,$i))."'>($Ib[$dh]) ".h($V.($O!=""?"@".$this->serverName($O):"").($i!=""?" - $i":""))."</a><br>\n";}}}}}else{if($_GET["ns"]!==""&&!$Md&&DB!=""){$e->select_db(DB);$S=table_status('',true);}echo
