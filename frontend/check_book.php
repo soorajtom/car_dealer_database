@@ -35,7 +35,7 @@ function translate_status($status)
 {
   if($status == "PENDING")
     return "Your order is under process. Please wait.";
-  if($status == "INTRANSIT")
+  if($status == "IN_TRANSIT")
     return "Your order is arriving. Please wait.";
   if($status == "READY")
     return "Your order is ready. Please visit the showroom for collection.";
