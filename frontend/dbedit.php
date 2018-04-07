@@ -485,7 +485,7 @@ dumpHeaders($Pc,$Nd=false){$ye=$_POST["output"];$kc=(preg_match('~sql~',$_POST["
 importServerPath(){return"adminer.sql";}function
 homepage(){echo'<p class="links">'.($_GET["ns"]==""&&support("database")?'<a href="'.h(ME).'database=">'.'Alter database'."</a>\n":""),(support("scheme")?"<a href='".h(ME)."scheme='>".($_GET["ns"]!=""?'Alter schema':'Create schema')."</a>\n":""),($_GET["ns"]!==""?'<a href="'.h(ME).'schema=">'.'Database schema'."</a>\n":""),(support("privileges")?"<a href='".h(ME)."privileges='>".'Privileges'."</a>\n":"");return
 true;}function
-navigation($Md){global$ga,$y,$Ib,$e;echo'<h2 id="change_later" style="font-weight:bold">
+navigation($Md){global$ga,$y,$Ib,$e;echo'<h2 id="change_later" style="font-weight:bold; color:white;">
 ',$this->name(),'
 </h2>
 ';if($Md=="auth"){$uc=true;foreach((array)$_SESSION["pwds"]as$dh=>$Hf){foreach($Hf
