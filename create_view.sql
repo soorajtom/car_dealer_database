@@ -91,3 +91,22 @@ CREATE OR REPLACE VIEW vehicle_emi_view AS
 CREATE OR REPLACE VIEW vehicles_not_delivered AS
 	SELECT C.*, CO.ETA FROM `customer_order` AS CO, `customer` AS C
 	WHERE CO.status <> 'DELIVERED' AND CO.customer_id=C.id;
+--
+-- VIEW FOR SEEEING EMPLOYEE
+--	
+	
+CREATE OR REPLACE VIEW employee_view AS 
+	SELECT C.id AS ID, 
+		   	C.name AS Name,
+		  	C.address AS Address,
+			C.salary AS salary,
+			C.gender AS gender,
+			C.age AS Age,
+			C.dept AS Department,
+			EM.name AS Manager
+	FROM (SELECT * 
+		FROM employee AS E 
+		LEFT JOIN managed_by AS M 
+		ON E.id = M.employee_id) AS C 
+		LEFT JOIN employee AS EM 
+		ON EM.id = C.managed_by;
