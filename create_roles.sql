@@ -71,7 +71,7 @@ CREATE OR REPLACE PROCEDURE create_user( IN username VARCHAR(30),
        	  	 	     IN `password` VARCHAR(30), IN role VARCHAR(30))
 BEGIN
 DECLARE stmt VARCHAR(100);
-prepare stmt FROM CONCAT('CREATE OR REPLACE USER ''', username, '''@''%'' IDENTIFIED BY ''',`password`, '''');
+prepare stmt FROM CONCAT('CREATE USER IF NOT EXISTS ''', username, '''@''%'' IDENTIFIED BY ''',`password`, '''');
 execute stmt;
 DEALLOCATE PREPARE stmt;
 prepare stmt FROM CONCAT('GRANT ', role , ' TO ''', username, '''');
