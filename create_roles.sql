@@ -40,7 +40,7 @@ GRANT SELECT ON car_dealer.customer_payment TO broker;
 GRANT SELECT ON car_dealer.customer_transaction TO broker;
 
 CREATE OR REPLACE ROLE insurance_agent;
-GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.insurance_company TO insurance_agent;
+GRANT SELECT ON car_dealer.insurance_company TO insurance_agent;
 GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.vehicle_insurance TO insurance_agent;
 GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.has_insurance TO insurance_agent;
 GRANT SELECT ON car_dealer.vehicle TO insurance_agent;
@@ -50,7 +50,7 @@ GRANT SELECT ON car_dealer.books TO insurance_agent;
 
 CREATE OR REPLACE ROLE vendor_company_dealer;
 GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.vehicle TO vendor_company_dealer;
-GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.vehicle_vendor TO vendor_company_dealer;
+GRANT SELECT ON car_dealer.vehicle_vendor TO vendor_company_dealer;
 GRANT SELECT, UPDATE, DELETE, INSERT ON car_dealer.vendor_order TO vendor_company_dealer;
 GRANT SELECT ON car_dealer.dealer_vendor_transaction TO vendor_company_dealer;
 
