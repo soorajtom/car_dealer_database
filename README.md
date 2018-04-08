@@ -13,3 +13,8 @@
 ## Running without inserting Test data
 1. If you donot need to insert test data, remove `source insert_data.sql` from `mymake.sql` and run `source mymake.sql`
 
+## Running FrontEnd
+
+1. Go to the directory `frondend` and run the command `php -S <addr>:<port>`
+1. For testing use `php -S localhost:8000` 
+1. Now open a browser and go to `http://localhost:8000` (for testing). 
